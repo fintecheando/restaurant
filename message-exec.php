@@ -1,0 +1,75 @@
+<?
+	/*****************************************************
+	Developer: macdonaldgeek
+	Email: admin@restaurantmis.tk
+	Phone: +255-657-567401/+254-717-667201/+44-744-0579061
+	Twitter: @macdonaldgeek
+
+	COPYRIGHT ©2014 RESTAURANT SCRIPT. ALL RIGHTS RESERVED
+	******************************************************/
+?>
+<?php
+	//checking connection and connecting to a database
+	require_once('connection/config.php');
+	//Connect to mysql server
+	$link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
+	if(!$link) {
+		die('Failed to connect to server: ' . mysql_error());
+	}
+	
+	//Select database
+	$db = mysql_select_db(DB_DATABASE);
+	if(!$db) {
+		die("Unable to select database");
+	}
+ 
+ //Function to sanitize values received from the form. Prevents SQL injection
+	function clean($str) {
+		$str = @trim($str);
+		if(get_magic_quotes_gpc()) {
+			$str = stripslashes($str);
+		}
+		return mysql_real_escape_string($str);
+	}
+	
+    //retrive a timezone from the timezones table
+    //define a default value for flag_1
+    $flag_1 = 1;
+    $timezones=mysql_query("SELECT * FROM timezones WHERE flag='$flag_1'")
+    or die("Something is wrong. ".mysql_error());
+    
+    $row=mysql_fetch_assoc($timezones); //gets retrieved row
+    
+    $active_reference = $row['timezone_reference']; //gets active timezone
+    
+    date_default_timezone_set($active_reference); //sets the default timezone for use
+    
+    $current_date = date("Y-m-d"); //gets the current date
+    
+    $current_time = date("H:i:s"); //gets the current time
+    
+	//Sanitize the POST values
+	$new_flag = clean(1);
+	$new_fname = clean($_POST['fname']);
+    $new_lname = clean($_POST['lname']);
+	$new_email = clean($_POST['email']);
+    $new_subject = clean($_POST['subject']);
+	$new_message = clean($_POST['txtmessage']);
+    
+    $from = $new_lname . ", " . $new_fname;
+	
+     // update the entry
+     $result = mysql_query("INSERT INTO messages(message_from,message_email,message_date,message_time,message_subject,message_text,message_flag) VALUES('$from','$new_email','$current_date','$current_time','$new_subject','$new_message','$new_flag')")
+     or die("Message sending failed ..." . mysql_error() . "... Our team is working on the solution to this problem."); 
+ 
+     if($result){
+         // redirect back to the messages page
+         header("Location: contactus.php?sent=true");
+         exit();
+     }
+     else
+     // if not sent, give an error
+     {
+        die("Message sending failed ..." . mysql_error() . "... Our team is working on the solution to this problem.");
+     }
+?>
