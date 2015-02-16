@@ -5,7 +5,7 @@
 	Phone: +255-657-567401/+254-717-667201/+44-744-0579061
 	Twitter: @macdonaldgeek
 
-	COPYRIGHT ©2014 RESTAURANT SCRIPT. ALL RIGHTS RESERVED
+	COPYRIGHT ï¿½2014 RESTAURANT SCRIPT. ALL RIGHTS RESERVED
 	******************************************************/
 ?>
 <?php
@@ -45,7 +45,7 @@ require_once('admin/locale.php');
   </div>
 </div>
 <div id="footer">
-    <div class="bottom_menu"><a href="index.php">Home Page</a>  |  <a href="aboutus.php">About Us</a>  |  <a href="specialdeals.php">Special Deals</a>  |  <a href="foodzone.php">Food Zone</a>  |  <a href="#">Affiliate Program</a><br>
+    <div class="bottom_menu"><a href="index.php">Pagina Inicial</a>  |  <a href="aboutus.php">About Us</a>  |  <a href="specialdeals.php">Special Deals</a>  |  <a href="foodzone.php">Food Zone</a>  |  <a href="#">Affiliate Program</a><br>
   | <a href="admin/index.php" target="_blank">Administrator</a> |</div>
   
   <div class="bottom_addr">&copy; <?php echo date("Y") . " " . $name ?>. All Rights Reserved</div>
